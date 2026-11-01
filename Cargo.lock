@@ -2480,6 +2480,25 @@ dependencies = [
 ]
 
 [[package]]
+name = "olai-uc-sharing"
+version = "0.0.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "033f5d25dc90dbf4128ce6bb156ab3cd6021bca1b5169b0d23ba7c43a4456589"
+dependencies = [
+ "async-trait",
+ "base64 0.22.1",
+ "chrono",
+ "olai-store",
+ "olai-uc-common",
+ "serde",
+ "serde_json",
+ "sha2",
+ "sqlx",
+ "tokio",
+ "uuid",
+]
+
+[[package]]
 name = "olai-uc-storage-access"
 version = "0.0.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2644,13 +2663,11 @@ dependencies = [
 name = "opensharing-postgres"
 version = "0.0.1"
 dependencies = [
- "async-trait",
+ "olai-uc-sharing",
  "opensharing-provider",
- "serde_json",
  "sqlx",
  "tempfile",
  "tokio",
- "uuid",
 ]
 
 [[package]]
@@ -2659,23 +2676,21 @@ version = "0.0.1"
 dependencies = [
  "async-trait",
  "axum",
- "base64 0.22.1",
  "chrono",
  "olai-credential-vending",
  "olai-storage-credentials",
  "olai-store",
+ "olai-uc-sharing",
  "opensharing-admin-api",
  "opensharing-api",
  "opensharing-engine",
  "serde",
  "serde_json",
- "sha2",
  "thiserror",
  "tokio",
  "tower",
  "tracing",
  "url",
- "uuid",
 ]
 
 [[package]]
@@ -2718,13 +2733,11 @@ dependencies = [
 name = "opensharing-sqlite"
 version = "0.0.1"
 dependencies = [
- "async-trait",
+ "olai-uc-sharing",
  "opensharing-provider",
- "serde_json",
  "sqlx",
  "tempfile",
  "tokio",
- "uuid",
 ]
 
 [[package]]
@@ -3869,7 +3882,6 @@ checksum = "ee6798b1838b6a0f69c007c133b8df5866302197e404e8b6ee8ed3e3a5e68dc6"
 dependencies = [
  "base64 0.22.1",
  "bytes",
- "chrono",
  "crc",
  "crossbeam-queue",
  "either",
@@ -3947,7 +3959,6 @@ dependencies = [
  "bitflags",
  "byteorder",
  "bytes",
- "chrono",
  "crc",
  "digest",
  "dotenvy",
@@ -3989,7 +4000,6 @@ dependencies = [
  "base64 0.22.1",
  "bitflags",
  "byteorder",
- "chrono",
  "crc",
  "dotenvy",
  "etcetera",
@@ -4024,7 +4034,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "c2d12fe70b2c1b4401038055f90f151b78208de1f9f89a7dbfd41587a10c3eea"
 dependencies = [
  "atoi",
- "chrono",
  "flume",
  "futures-channel",
  "futures-core",
