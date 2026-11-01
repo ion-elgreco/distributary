@@ -24,10 +24,12 @@ for the design.
   depends on the admin crates or the provider. `opensharing-provider` never
   depends on sqlx; the store crates do. The same CI job guards this. See
   `ARCHITECTURE.md` ("Crate layering").
-- **Cargo.lock and trestle.** CI resolves the `olai-*` trestle crates from
-  crates.io. A lock resolved under the local `just configure-trestle-deps` patch
-  must not be committed. Check with `dev/scripts/check-cargo-lock-trestle.sh`,
-  which the pre-commit hook also runs (`git config core.hooksPath .githooks`).
+- **Cargo.lock and sibling crates.** CI resolves the crates of sibling repos
+  (trestle's `olai-*`, mangrove's `olai-uc-*` once unpinned) from crates.io. A
+  lock resolved under a local `just patch-deps <upstream>` patch must not be
+  committed: run `just lock-registry` first. `just check-lock`, which
+  the pre-commit hook also runs (`git config core.hooksPath .githooks`), catches
+  it. See "crates.io proxy" below.
 - **Every change ships with tests.** Never delete a passing test to green a
   suite.
 
@@ -37,7 +39,7 @@ for the design.
   `brew install open-lakehouse/tap/trestle`, or `brew upgrade trestle` after a
   trestle release. Trestle's release pipeline updates the tap, so a release is
   installable right away. A crates.io proxy that age-filters new versions can
-  hide it for days. A stale CLI rejects `json_field_names`. The `../trestle`
+  hide it for days. A stale CLI rejects `json_field_names`. The trestle
   source checkout is only needed to patch the `olai-*` library crates
   (`just configure-trestle-deps`), not for the CLI.
 - The admin protos (`proto/unitycatalog/{shares,recipients,providers}`) have their
@@ -71,9 +73,42 @@ cargo fmt --all --check \
   && cargo test --workspace --all-features --doc
 ```
 
+## Builds and disk
+
+Dev builds keep line tables for workspace crates and no debug info for
+dependencies (`[profile.dev]`). Panic locations and backtrace file:line still
+work. For a debugger, use `cargo build --profile debugging` (separate
+`target/debugging/`). Run `cargo clean` in a worktree before removing it.
+
+## crates.io proxy
+
+The local crates.io proxy hides versions for 7 days after release. That applies
+to every crate a sibling repo publishes, not only trestle's: distributary
+consumes trestle's `olai-*` from crates.io and mangrove's `olai-uc-*` (git pins
+today). Trestle's
+[`docs/crates-proxy.md`](https://github.com/open-lakehouse/trestle/blob/main/docs/crates-proxy.md)
+has the full guide; trestle only hosts the tooling. In short:
+
+- A fresh sibling release: `just patch-deps <upstream>` (`trestle`, `mangrove`;
+  `configure-trestle-deps` is a shortcut), build, then `just lock-registry`
+  before committing. The shim `dev/scripts/crates-proxy.sh` runs trestle's
+  `scripts/crates-proxy/` and finds the checkouts next to this one (or via
+  `<REPO>_ROOT`), from worktrees too.
+- Chained releases: a fresh mangrove release usually needs a fresh trestle
+  release too. Patch both: `just patch-deps mangrove && just patch-deps trestle`.
+- The mangrove crates are git pins (`version` + `git` + `rev`), which bypass the
+  proxy. Switching one to a plain `version` that is less than 7 days old is the
+  case above. Otherwise just drop `git`/`rev`.
+
 ## Commits and pull requests
 
-Conventional commits, scoped by crate directory (`common`, `admin`,
-`admin-api`, `client`, `api`, `engine`, `provider`, `postgres`, `sqlite`,
-`server`, `neon`): release-plz derives each crate's version bump and
-changelog from them. PR titles follow the same format.
+- **PRs are squash-merged. The PR title is the commit release-plz sees**: a
+  conventional commit scoped by crate directory (`common`, `admin`,
+  `admin-api`, `client`, `api`, `engine`, `provider`, `postgres`, `sqlite`,
+  `server`, `neon`). release-plz derives each crate's version bump and
+  changelog from it, and CI lints it (`pr-title.yml`). Commits inside a PR are
+  for review only.
+- When work should land on `main` as separate commits (several crates or change
+  types, each deserving its own changelog entry), split it into a
+  [`gh stack`](https://github.com/github/gh-stack), one layer per
+  `type(scope)`.
