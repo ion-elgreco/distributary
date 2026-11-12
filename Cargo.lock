@@ -2375,13 +2375,13 @@ dependencies = [
 
 [[package]]
 name = "olai-credential-vending"
-version = "0.0.2"
+version = "0.0.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e0d58d6eb7db736dc304909fa4031fe667b01e107e1aeebb1197c9b01ec7eb40"
+checksum = "7a4061cc0c32ea46d001f66cc3dee4aaf45e66460670b5aed6a5c198d0736dd3"
 dependencies = [
  "async-trait",
  "chrono",
- "olai-http",
+ "olai-http 0.0.10",
  "olai-storage-credentials",
  "serde",
  "serde_json",
@@ -2391,9 +2391,38 @@ dependencies = [
 
 [[package]]
 name = "olai-http"
-version = "0.0.9"
+version = "0.0.10"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "43fc52fd03215dba64cd00246ed37411c3217d8e92d1027e7b654c62e9e565b2"
+checksum = "feaffe8c073bce67b3a272508870e69fccc6050afb6da9797faa6ee135dc40c8"
+dependencies = [
+ "async-trait",
+ "base64 0.22.1",
+ "bytes",
+ "chrono",
+ "futures",
+ "http",
+ "humantime",
+ "hyper",
+ "percent-encoding",
+ "quick-xml 0.37.5",
+ "rand 0.9.5",
+ "reqwest 0.13.4",
+ "ring",
+ "rust-ini",
+ "rustls-pemfile",
+ "serde",
+ "serde_json",
+ "thiserror",
+ "tokio",
+ "tracing",
+ "url",
+]
+
+[[package]]
+name = "olai-http"
+version = "0.0.11"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "85ce661e687a6c951dfcbbed850ae4ec8c1695d7b0a49fa49dc2fabb8a97381d"
 dependencies = [
  "async-trait",
  "base64 0.22.1",
@@ -2420,9 +2449,9 @@ dependencies = [
 
 [[package]]
 name = "olai-http-wasm"
-version = "0.0.5"
+version = "0.0.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "348e03daaf902c4271eef1b733ce00825b549cb1e3ce329d80d351efd873b71c"
+checksum = "980de22f1f3471e13a589cdb2f61a2d572a52a4722276d813f1724df7a5a8ad1"
 dependencies = [
  "futures",
  "reqwest 0.12.28",
@@ -2434,9 +2463,9 @@ dependencies = [
 
 [[package]]
 name = "olai-storage-credentials"
-version = "0.0.1"
+version = "0.0.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "205aeac96dcaa8a5a2c35af1fb0629aa7d2ba1475a7da74c827e5dc7c6655895"
+checksum = "0482bcd16c51565dfe4911338fa60d0a5d986ca6032f6b2d7c024f1d6cc90dd2"
 dependencies = [
  "chrono",
  "object_store 0.13.2",
@@ -2449,9 +2478,9 @@ dependencies = [
 
 [[package]]
 name = "olai-store"
-version = "0.0.6"
+version = "0.0.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "114a5f83c8734b7917c5ab4ddbda3a76b8facca507961e3bf8f8a576c9ad1bc6"
+checksum = "a6685e24548e57c0093cba3b6b816e71b7b82b143b104c9e928f407b6ba9f929"
 dependencies = [
  "aes-gcm",
  "async-trait",
@@ -2470,14 +2499,14 @@ dependencies = [
 
 [[package]]
 name = "olai-uc-client"
-version = "0.0.7"
+version = "0.0.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "58063bf4fba64c02d1de02343f6fee7fcabc8ea22ef0ae30579ccc0886dcef39"
+checksum = "1a859ddb60af49d22140a9b9560d7a3fe0f22e64bd1b0107a27d2789262c9fe1"
 dependencies = [
  "buffa",
  "futures",
  "getrandom 0.2.17",
- "olai-http",
+ "olai-http 0.0.10",
  "olai-http-wasm",
  "olai-uc-common",
  "olai-uc-delta-api",
@@ -2495,9 +2524,9 @@ dependencies = [
 
 [[package]]
 name = "olai-uc-common"
-version = "0.0.7"
+version = "0.0.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a3983696462d38619f7bde795302e0f66b862d564a73f12c6b25ed59cf1c2a16"
+checksum = "0dec5fedbd83e4e7f6b3d95520dd59d4710d5652398e1ea497787bba40e91389"
 dependencies = [
  "aes-gcm",
  "async-trait",
@@ -2527,9 +2556,9 @@ dependencies = [
 
 [[package]]
 name = "olai-uc-delta-api"
-version = "0.0.6"
+version = "0.0.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "52bfb1662607fba609d9b87fbf8994ee6de928cd6cf225970f8afee41c7dd9b0"
+checksum = "97e171823fbfb82ff9190709f010525fcad79a9c9317b958ecd0352563b67695"
 dependencies = [
  "async-trait",
  "olai-storage-credentials",
@@ -2542,9 +2571,9 @@ dependencies = [
 
 [[package]]
 name = "olai-uc-handlers"
-version = "0.0.1"
+version = "0.0.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c58f0b29fe53c9dce562b12197e753bf45500b6cabac633c219eb525abe65431"
+checksum = "8167cfd8c06a62288af038d7345d3ca38a7057ebe133c47fbd8b3be0e677cb17"
 dependencies = [
  "async-trait",
  "axum",
@@ -2557,9 +2586,9 @@ dependencies = [
 
 [[package]]
 name = "olai-uc-sharing"
-version = "0.0.1"
+version = "0.0.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "033f5d25dc90dbf4128ce6bb156ab3cd6021bca1b5169b0d23ba7c43a4456589"
+checksum = "1bfcf36c79dd0f080997e456d39230e54d3dae1c094f3bd7786f8ddac15ae590"
 dependencies = [
  "async-trait",
  "base64 0.22.1",
@@ -2576,9 +2605,9 @@ dependencies = [
 
 [[package]]
 name = "olai-uc-storage-access"
-version = "0.0.2"
+version = "0.0.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a11d7309545309765d8b82901b11ad4f804edfc71bf4a7f07a9f2eb3f2fe80e1"
+checksum = "66e4457b942e2d0a5b8cc65dc54e421b338a12796bf274c1cd8c332818d6020e"
 dependencies = [
  "async-trait",
  "chrono",
@@ -2593,9 +2622,9 @@ dependencies = [
 
 [[package]]
 name = "olai-vended-store"
-version = "0.0.1"
+version = "0.0.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1716dd62fc04e585e2c2028927cd20fe54d69bd8468bdb097c9c3ececb1a7006"
+checksum = "923bb1f8ea972293d4a79bc2fd424b17d07e057d171c7dfa3a2b9455a2114bd1"
 dependencies = [
  "async-trait",
  "bytes",
@@ -2605,7 +2634,7 @@ dependencies = [
  "getrandom 0.4.3",
  "http",
  "object_store 0.13.2",
- "olai-http",
+ "olai-http 0.0.11",
  "olai-storage-credentials",
  "ring",
  "send_wrapper",
@@ -2671,7 +2700,7 @@ dependencies = [
  "chrono",
  "futures",
  "itertools 0.14.0",
- "olai-http",
+ "olai-http 0.0.11",
  "opensharing-common",
  "reqwest 0.13.4",
  "serde_json",
